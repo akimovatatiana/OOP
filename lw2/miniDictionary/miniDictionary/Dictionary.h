@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -13,14 +13,14 @@
 using namespace std;
 
 const int ARGC = 2;
-const string ERROR_FILE = "Ошибка открытия файла с названием: ";
-const string WRONG_ARGC = "Неправильное количество аргументов: miniDictionary.exe <dictionaryFile>";
-const string INSERT_TRANS = "Введите перевод слова:";
-const string SAVE_CHANGES = "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом.";
+const string ERROR_FILE = "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° СЃ РЅР°Р·РІР°РЅРёРµРј: ";
+const string WRONG_ARGC = "РќРµРїСЂР°РІРёР»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р°СЂРіСѓРјРµРЅС‚РѕРІ: miniDictionary.exe <dictionaryFile>";
+const string INSERT_TRANS = "Р’РІРµРґРёС‚Рµ РїРµСЂРµРІРѕРґ СЃР»РѕРІР°:";
+const string SAVE_CHANGES = "Р’ СЃР»РѕРІР°СЂСЊ Р±С‹Р»Рё РІРЅРµСЃРµРЅС‹ РёР·РјРµРЅРµРЅРёСЏ. Р’РІРµРґРёС‚Рµ Y РёР»Рё y РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РїРµСЂРµРґ РІС‹С…РѕРґРѕРј.";
 const string AGREE_SAVE_L = "y";
 const string AGREE_SAVE_H = "Y";
-const string SAVED = "Изменения сохранены. До свидания.";
-const string UNSAVED = "Изменения не сохранены. До свидания.";
+const string SAVED = "РР·РјРµРЅРµРЅРёСЏ СЃРѕС…СЂР°РЅРµРЅС‹. Р”Рѕ СЃРІРёРґР°РЅРёСЏ.";
+const string UNSAVED = "РР·РјРµРЅРµРЅРёСЏ РЅРµ СЃРѕС…СЂР°РЅРµРЅС‹. Р”Рѕ СЃРІРёРґР°РЅРёСЏ.";
 const string END_WORK = "...";
 const char DELIMETER = '-';
 typedef map<string, string> Dictionary;

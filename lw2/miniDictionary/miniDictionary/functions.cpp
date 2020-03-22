@@ -1,4 +1,4 @@
-#include "Dictionary.h"
+ï»¿#include "Dictionary.h"
 
 void ReadDictionary(const string& fIn, Dictionary& dictionary)
 {
@@ -72,7 +72,7 @@ bool AddTranslation(const string& inputWord, Dictionary& dictionary)
 	if (GetTranslation(inputWord, translation))
 	{
 		InsertInDictionary(dictionary, inputWord, translation);
-		cout << "Ñëîâî \"" << inputWord << "\" ñîõðàíåíî â ñëîâàðå êàê \"" << translation << "\"." << endl;
+		cout << "Ð¡Ð»Ð¾Ð²Ð¾ \"" << inputWord << "\" ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¾ Ð² ÑÐ»Ð¾Ð²Ð°Ñ€Ðµ ÐºÐ°Ðº \"" << translation << "\"." << endl;
 		return true;
 	}
 	else
@@ -83,12 +83,12 @@ bool AddTranslation(const string& inputWord, Dictionary& dictionary)
 
 bool GetTranslation(const string& inputWord, string& translation)
 {
-	cout << "Íåèçâåñòíîå ñëîâî \"" << inputWord << "\". Ââåäèòå ïåðåâîä èëè ïóñòóþ ñòðîêó äëÿ îòêàçà." << endl;
+	cout << "ÐÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ð¾Ðµ ÑÐ»Ð¾Ð²Ð¾ \"" << inputWord << "\". Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´ Ð¸Ð»Ð¸ Ð¿ÑƒÑÑ‚ÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð´Ð»Ñ Ð¾Ñ‚ÐºÐ°Ð·Ð°." << endl;
 	cout << ">";
 	translation = ReadLine();
 	if (translation.empty())
 	{
-		cout << "Ñëîâî \"" << inputWord << "\" ïðîèãíîðèðîâàíî." << endl;
+		cout << "Ð¡Ð»Ð¾Ð²Ð¾ \"" << inputWord << "\" Ð¿Ñ€Ð¾Ð¸Ð³Ð½Ð¾Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¾." << endl;
 		return false;
 	}
 	return true;
