@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "miniDictionary", "miniDictionary\miniDictionary.vcxproj", "{BD312B90-4009-48D2-8987-8E463D9BED50}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testing", "testing\testing.vcxproj", "{E3F6ADC7-C855-41F6-9A26-277993F8DC40}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "miniDictionary-tests", "miniDictionary-tests\miniDictionary-tests.vcxproj", "{C2374E40-96AB-415E-9262-11C6025F8DAC}"
 EndProject
 Global
@@ -25,14 +23,6 @@ Global
 		{BD312B90-4009-48D2-8987-8E463D9BED50}.Release|x64.Build.0 = Release|x64
 		{BD312B90-4009-48D2-8987-8E463D9BED50}.Release|x86.ActiveCfg = Release|Win32
 		{BD312B90-4009-48D2-8987-8E463D9BED50}.Release|x86.Build.0 = Release|Win32
-		{E3F6ADC7-C855-41F6-9A26-277993F8DC40}.Debug|x64.ActiveCfg = Debug|x64
-		{E3F6ADC7-C855-41F6-9A26-277993F8DC40}.Debug|x64.Build.0 = Debug|x64
-		{E3F6ADC7-C855-41F6-9A26-277993F8DC40}.Debug|x86.ActiveCfg = Debug|Win32
-		{E3F6ADC7-C855-41F6-9A26-277993F8DC40}.Debug|x86.Build.0 = Debug|Win32
-		{E3F6ADC7-C855-41F6-9A26-277993F8DC40}.Release|x64.ActiveCfg = Release|x64
-		{E3F6ADC7-C855-41F6-9A26-277993F8DC40}.Release|x64.Build.0 = Release|x64
-		{E3F6ADC7-C855-41F6-9A26-277993F8DC40}.Release|x86.ActiveCfg = Release|Win32
-		{E3F6ADC7-C855-41F6-9A26-277993F8DC40}.Release|x86.Build.0 = Release|Win32
 		{C2374E40-96AB-415E-9262-11C6025F8DAC}.Debug|x64.ActiveCfg = Debug|x64
 		{C2374E40-96AB-415E-9262-11C6025F8DAC}.Debug|x64.Build.0 = Debug|x64
 		{C2374E40-96AB-415E-9262-11C6025F8DAC}.Debug|x86.ActiveCfg = Debug|Win32
