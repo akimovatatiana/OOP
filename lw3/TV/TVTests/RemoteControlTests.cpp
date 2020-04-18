@@ -1,4 +1,4 @@
-#include "../TV/RemoteControl.h"
+п»ї#include "../TV/RemoteControl.h"
 #include "../TV/TVSet.h"
 #include <sstream>
 #include <boost/optional.hpp>
@@ -8,8 +8,8 @@ using namespace std;
 using boost::optional;
 using boost::none;
 
-// Зависимости RemoteControl-а вынесены в родительскую структуру,
-// чтобы гарантировать их создание до конструирования самого remote-контрола
+// Р—Р°РІРёСЃРёРјРѕСЃС‚Рё RemoteControl-Р° РІС‹РЅРµСЃРµРЅС‹ РІ СЂРѕРґРёС‚РµР»СЊСЃРєСѓСЋ СЃС‚СЂСѓРєС‚СѓСЂСѓ,
+// С‡С‚РѕР±С‹ РіР°СЂР°РЅС‚РёСЂРѕРІР°С‚СЊ РёС… СЃРѕР·РґР°РЅРёРµ РґРѕ РєРѕРЅСЃС‚СЂСѓРёСЂРѕРІР°РЅРёСЏ СЃР°РјРѕРіРѕ remote-РєРѕРЅС‚СЂРѕР»Р°
 struct RemoteControlDependencies
 {
 	CTVSet tv;
@@ -26,11 +26,11 @@ struct RemoteControlFixture : RemoteControlDependencies
 	{
 	}
 
-	// Вспомогательная функция для проверки работы команды command
-	// Она принимает ожидаемый номер канала expectedChannel и expectedOutput
+	// Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РїСЂРѕРІРµСЂРєРё СЂР°Р±РѕС‚С‹ РєРѕРјР°РЅРґС‹ command
+	// РћРЅР° РїСЂРёРЅРёРјР°РµС‚ РѕР¶РёРґР°РµРјС‹Р№ РЅРѕРјРµСЂ РєР°РЅР°Р»Р° expectedChannel Рё expectedOutput
 	void VerifyCommandHandling(const string& command, const optional<int>& expectedChannel, const string& expectedOutput)
 	{
-		// Предварительно очищаем содержимое выходного потока
+		// РџСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ РѕС‡РёС‰Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ РІС‹С…РѕРґРЅРѕРіРѕ РїРѕС‚РѕРєР°
 		output = stringstream();
 		input = stringstream();
 		BOOST_CHECK(input << command);
@@ -59,10 +59,10 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(Info_command_test)
 	BOOST_AUTO_TEST_CASE(can_print_tv_info)
 	{
-		// Ожидаемое поведение команды Info, вызванной у выключенного телевизора
+		// РћР¶РёРґР°РµРјРѕРµ РїРѕРІРµРґРµРЅРёРµ РєРѕРјР°РЅРґС‹ Info, РІС‹Р·РІР°РЅРЅРѕР№ Сѓ РІС‹РєР»СЋС‡РµРЅРЅРѕРіРѕ С‚РµР»РµРІРёР·РѕСЂР°
 		VerifyCommandHandling("Info", none, "TV is turned off\n");
 
-		// Проверяем поведение команды Info у включенного телевизора
+		// РџСЂРѕРІРµСЂСЏРµРј РїРѕРІРµРґРµРЅРёРµ РєРѕРјР°РЅРґС‹ Info Сѓ РІРєР»СЋС‡РµРЅРЅРѕРіРѕ С‚РµР»РµРІРёР·РѕСЂР°
 		tv.TurnOn();
 		tv.SelectChannel(42);
 		VerifyCommandHandling("Info", 42, "TV is turned on\nChannel is: 42\n");
