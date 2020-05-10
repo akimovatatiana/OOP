@@ -1,2 +1,2 @@
+#include "stdafx.h"
 #include "ISolidShape.h"
-#include "Header.h"

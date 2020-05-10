@@ -1,213 +1,46 @@
-﻿#define BOOST_TEST_MAIN
-#include <iostream>
-#include <boost/test/unit_test.hpp>
-#include "../TV/TVSet.h"
+﻿// TVTests.cpp : Defines the entry point for the console application.
+//
 
-struct TVSetFixture
-{
-	CTVSet tv;
-};
-// Телевизор 
-BOOST_FIXTURE_TEST_SUITE(TVSet, TVSetFixture)
-// изначально выключен
-BOOST_AUTO_TEST_CASE(is_turned_off_by_default)
-{
-	BOOST_CHECK(!tv.IsTurnedOn());
-}
-// не может переключать канал в выключенном состоянии
-BOOST_AUTO_TEST_CASE(cant_select_channel_when_turned_off)
-{
-	BOOST_CHECK(!tv.SelectChannel(87));
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 0);
-}
+#include "stdafx.h"
+#include <boost/test/output/compiler_log_formatter.hpp>
 
-// может быть включен
-BOOST_AUTO_TEST_CASE(can_be_turned_on)
-{
-	tv.TurnOn();
-	BOOST_CHECK(tv.IsTurnedOn());
-}
-// изначально отображает 0 канал
-BOOST_AUTO_TEST_CASE(displays_channel_0_by_default)
-{
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 0);
-}
 
-struct TurnedOnTv : TVSetFixture
+/*
+Данный класс управляет формаитрованием журнала запуска тестов
+Для того, чтобы увидеть результат, приложение должно быть запущено с ключём --log-level=test_suite (см. Post-build event в настройках проекта)
+*/
+class SpecLogFormatter :
+	public boost::unit_test::output::compiler_log_formatter
 {
-	TurnedOnTv()
+	virtual void test_unit_start(std::ostream &os, boost::unit_test::test_unit const& tu) override
 	{
-		tv.TurnOn();
+		// перед запуском test unit-а выводим имя test unit-а, заменяя символ подчеркивания на пробел
+		os << std::string(m_indent, ' ') << boost::replace_all_copy(tu.p_name.get(), "_", " ") << std::endl;
+		// увеличиваем отступ для вывода имен последующих test unit-ов в виде дерева
+		m_indent += 2;
 	}
-};
-// после включения
-BOOST_FIXTURE_TEST_SUITE(when_turned_on, TurnedOnTv)
-// отображает канал 1
-BOOST_AUTO_TEST_CASE(displays_channel_one)
-{
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 1);
-}
-// можно выключить
-BOOST_AUTO_TEST_CASE(can_be_turned_off)
-{
-	tv.TurnOff();
-	BOOST_CHECK(!tv.IsTurnedOn());
-}
-// позволяет выбрать канал от 1 до 99
-BOOST_AUTO_TEST_CASE(can_select_channel_from_1_to_99)
-{
-	BOOST_CHECK(tv.SelectChannel(1));
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 1);
 
-	BOOST_CHECK(tv.SelectChannel(99));
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 99);
-
-	// Выбираем канал между 1 и 99
-	BOOST_CHECK(tv.SelectChannel(42));
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 42);
-
-	// При попытке выбрать канал за пределами [1; 99] 
-	// телевизор не должен менять свой канал
-	BOOST_CHECK(!tv.SelectChannel(0));
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 42);
-
-	BOOST_CHECK(!tv.SelectChannel(100));
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 42);
-}
-BOOST_AUTO_TEST_CASE(can_select_previous_channel)
-{
-	BOOST_CHECK(tv.SelectChannel(10));
-	BOOST_CHECK(tv.SelectChannel(12));
-	BOOST_CHECK(tv.SelectPreviousChannel());
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 10);
-}
-
-BOOST_AUTO_TEST_CASE(cant_set_channel_name_with_empty_string)
-{
-	BOOST_CHECK(!tv.SetChannelName(1, ""));
-}
-BOOST_AUTO_TEST_CASE(cant_set_channel_name_with_string_of_spaces)
-{
-	BOOST_CHECK(!tv.SetChannelName(8, "   "));
-}
-BOOST_AUTO_TEST_CASE(can_set_channel_name_with_one_word)
-{
-	BOOST_CHECK(tv.SetChannelName(1, "STS"));
-	BOOST_CHECK_EQUAL(tv.GetChannelName(1), "STS");
-}
-BOOST_AUTO_TEST_CASE(can_set_channel_name_with_extra_spaces)
-{
-	BOOST_CHECK(tv.SetChannelName(2, "   MTV    HD    "));
-	BOOST_CHECK_EQUAL(tv.GetChannelName(2), "MTV HD");
-}
-BOOST_AUTO_TEST_CASE(can_redifine_channel_name_with_new_number)
-{
-	BOOST_CHECK(tv.SetChannelName(2, "MTV HD"));
-	BOOST_CHECK(tv.SetChannelName(3, "MTV HD"));
-	BOOST_CHECK_EQUAL(tv.GetChannelName(3), "MTV HD");
-	BOOST_CHECK(tv.GetChannelName(2).empty());
-}
-BOOST_AUTO_TEST_CASE(can_delete_channel_name)
-{
-	BOOST_CHECK(tv.SetChannelName(6, "TNT"));
-	BOOST_CHECK(tv.SelectChannel("TNT"));
-	BOOST_CHECK(tv.DeleteChannelName("TNT"));
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 6);
-}
-BOOST_AUTO_TEST_CASE(cant_delete_channel_name_with_unknown_name)
-{
-	BOOST_CHECK(!tv.DeleteChannelName("TNT"));
-}
-BOOST_AUTO_TEST_SUITE_END()
-
-
-struct TurnedOffTv : TurnedOnTv
-{
-	TurnedOffTv()
+	virtual void test_unit_finish(std::ostream &/*os*/, boost::unit_test::test_unit const& /*tu*/, unsigned long /*elapsed*/) override
 	{
-		tv.SetChannelName(12, "ORT");
-		tv.TurnOff();
+		// по окончании test unit-а уменьшаем отступ
+		m_indent -= 2;
 	}
+
+	int m_indent = 0;
 };
 
-BOOST_FIXTURE_TEST_SUITE(when_turned_off, TurnedOffTv)
-
-BOOST_AUTO_TEST_CASE(is_at_channel_0_when_turned_off)
+boost::unit_test::test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
 {
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 0);
-}
-BOOST_AUTO_TEST_CASE(cant_select_previous_channel_when_turned_off)
-{
-	BOOST_CHECK(!tv.SelectPreviousChannel());
-}
-BOOST_AUTO_TEST_CASE(cant_select_channel_when_turned_off)
-{
-	BOOST_CHECK(!tv.SelectChannel(10));
-}
-BOOST_AUTO_TEST_CASE(cant_delete_channel_name_when_turned_off)
-{
-	BOOST_CHECK(!tv.DeleteChannelName("ORT"));
-}
-BOOST_AUTO_TEST_CASE(cant_get_channel_name_when_turned_off)
-{
-	BOOST_CHECK_EQUAL(tv.GetChannelName(12), "");
-}
-BOOST_AUTO_TEST_CASE(cant_get_channel_by_name_when_turned_off)
-{
-	BOOST_CHECK_EQUAL(tv.GetChannelByName("ORT"), 0);
-}
-BOOST_AUTO_TEST_SUITE_END()
-
-struct after_subsequent_turning_on_ : TurnedOnTv
-{
-	after_subsequent_turning_on_()
-	{
-		tv.SelectChannel(33);
-		tv.TurnOff();
-		tv.TurnOn();
-	}
-};
-
-// после повторного включения
-BOOST_FIXTURE_TEST_SUITE(after_subsequent_turning_on, after_subsequent_turning_on_)
-// восстанавливает последний выбранный канал
-BOOST_AUTO_TEST_CASE(restores_last_selected_channel)
-{
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 33);
-}
-
-BOOST_AUTO_TEST_CASE(remember_previous_channel)
-{
-	BOOST_CHECK(tv.SelectPreviousChannel());
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 1);
-}
-BOOST_AUTO_TEST_SUITE_END()
-
-struct after_subsequent_turning_on_and_setting_name_ : TurnedOnTv
-{
-	after_subsequent_turning_on_and_setting_name_()
-	{
-		tv.SetChannelName(33, "ORT");
-		tv.TurnOff();
-		tv.TurnOn();
-	}
-};
-BOOST_FIXTURE_TEST_SUITE(after_subsequent_turning_on_and_setting_name, after_subsequent_turning_on_and_setting_name_)
-BOOST_AUTO_TEST_CASE(can_get_channel_name)
-{
-	BOOST_CHECK_EQUAL(tv.GetChannelName(33), "ORT");
-}
-BOOST_AUTO_TEST_CASE(can_get_channel_by_name)
-{
-	BOOST_CHECK_EQUAL(tv.GetChannelByName("ORT"), 33);
-}
-BOOST_AUTO_TEST_CASE(can_delete_channel_name)
-{
-	BOOST_CHECK(tv.SelectChannel("ORT"));
-	BOOST_CHECK(tv.DeleteChannelName("ORT"));
-	BOOST_CHECK_EQUAL(tv.GetChannel(), 33);
+	// Заменили имя log formatter на пользовательский
+	boost::unit_test::unit_test_log.set_formatter(new SpecLogFormatter);
+	// Имя корневого набора тестов - All tests
+	boost::unit_test::framework::master_test_suite().p_name.value = "All tests";
+	return 0;
 }
 
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+int main(int argc, char* argv[])
+{
+	// Запускаем тесты, передавая параметры командной строки и кастомную функцию инициализации тестов
+	return boost::unit_test::unit_test_main(&init_unit_test_suite, argc, argv);
+}

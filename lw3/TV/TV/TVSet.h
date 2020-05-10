@@ -1,5 +1,4 @@
 #pragma once
-#include "Header.h"
 
 using Channels = std::map<int, std::string>;
 class CTVSet
@@ -33,5 +32,3 @@ private:
 	void DeleteChannelByNumber(int channel);
 	std::string RemoveExtraSpaces(const std::string& str);
 };
-
-

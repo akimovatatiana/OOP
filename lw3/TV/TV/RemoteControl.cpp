@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "RemoteControl.h"
-#include "Header.h"
 #include "TVSet.h"
 
 using namespace std;
@@ -9,7 +9,7 @@ CRemoteControl::CRemoteControl(CTVSet& tv, std::istream& input, std::ostream& ou
 	: m_tv(tv)
 	, m_input(input)
 	, m_output(output)
-	, m_actionMap({ 
+	, m_actionMap({
 		  { "TurnOn", std::bind(&CRemoteControl::TurnOn, this, _1) },
 		  { "TurnOff", std::bind(&CRemoteControl::TurnOff, this, _1) },
 		  { "SelectChannel", std::bind(&CRemoteControl::SelectChannel, this, _1) },

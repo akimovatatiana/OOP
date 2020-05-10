@@ -1,5 +1,5 @@
 #pragma once
-#include "Header.h"
+#include <boost/noncopyable.hpp>
 #include "TVSet.h"
 
 using Channels = std::map<int, std::string>;
@@ -19,7 +19,7 @@ private:
 	bool Info(std::istream&);
 
 private:
-	using ActionMap = std::map<std::string, std::function<void(std::istream & args)>>;
+	using ActionMap = std::map<std::string, std::function<void(std::istream& args)>>;
 	CTVSet& m_tv;
 	std::istream& m_input;
 	std::ostream& m_output;
@@ -28,4 +28,5 @@ private:
 	bool IsChannelInRange(int channel);
 	std::string RemoveExtraSpaces(const std::string& str);
 };
+
 

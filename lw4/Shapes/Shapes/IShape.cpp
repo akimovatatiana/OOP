@@ -1,2 +1,2 @@
+#include "stdafx.h"
 #include "IShape.h"
-#include "Header.h"

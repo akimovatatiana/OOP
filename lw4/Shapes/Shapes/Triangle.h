@@ -1,13 +1,12 @@
 #pragma once
 #include "SolidShape.h"
 #include "Point.h"
-#include "Header.h"
 
 class CTriangle : public CSolidShape
 {
 public:
 	CTriangle(const CPoint& vertex1, const CPoint& vertex2, const CPoint& vertex3, uint32_t fillColor, uint32_t outlineColor);
-	
+
 	double GetArea() const override;
 	double GetPerimeter() const override;
 
@@ -21,4 +20,3 @@ private:
 
 	void AppendProperties(std::ostream& strm) const override;
 };
-

@@ -1,5 +1,4 @@
 #pragma once
-#include "Header.h"
 #include "IShape.h"
 
 class CShapeProcessor
@@ -18,11 +17,10 @@ private:
 	bool CheckIfListIsEmpty() const;
 	vector<string> ParseArgs(std::istream& args);
 private:
-	using ActionMap = std::map<std::string, std::function<void(std::istream & args)>>;
-	
+	using ActionMap = std::map<std::string, std::function<void(std::istream& args)>>;
+
 	std::istream& m_input;
 	std::ostream& m_output;
 	std::vector<std::shared_ptr<IShape>> m_shapesList;
 	const ActionMap m_actionMap;
 };
-

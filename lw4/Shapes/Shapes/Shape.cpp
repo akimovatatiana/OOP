@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "Shape.h"
-#include "Header.h"
 
 CShape::CShape(const std::string& type, uint32_t outlineColor)
 	: m_type(type)
@@ -15,7 +15,7 @@ uint32_t CShape::GetOutlineColor() const
 std::string CShape::ToString() const
 {
 	ostringstream strm;
-	strm << m_type << ":" << endl 
+	strm << m_type << ":" << endl
 		<< fixed << setprecision(4)
 		<< "\tArea = " << GetArea() << endl
 		<< "\tPerimeter = " << GetPerimeter() << endl

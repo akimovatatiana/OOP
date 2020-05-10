@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "LineSegment.h"
-#include "Header.h"
 
 CLineSegment::CLineSegment(const CPoint& startPoint, const CPoint& endPoint, uint32_t lineColor)
 	: CShape("Line segment", lineColor)

@@ -19,3 +19,5 @@ private:
 	void AppendProperties(std::ostream& strm) const override;
 };
 
+
+

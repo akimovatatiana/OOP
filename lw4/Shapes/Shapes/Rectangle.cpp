@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Rectangle.h"
 #include "LineSegment.h"
 
@@ -41,4 +42,3 @@ void CRectangle::AppendProperties(std::ostream& strm) const
 		<< "\tWidth = " << GetWidth() << endl
 		<< "\tHeight = " << GetHeight() << endl;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 #include "IShape.h"
-#include "Header.h"
 
 class ISolidShape : public virtual IShape
 {
@@ -9,4 +8,3 @@ public:
 
 	virtual uint32_t GetFillColor() const = 0;
 };
-

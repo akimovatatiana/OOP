@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "ShapeProcessor.h"
-#include "Header.h"
 #include "Point.h"
 #include "LineSegment.h"
 #include "Triangle.h"
@@ -75,7 +75,7 @@ void CShapeProcessor::AddTriangle(std::istream& args)
 {
 	uint32_t outlineColor = 0x000000;
 	uint32_t fillColor = 0xFFFFFF;
-	
+
 	vector<string> shapeParametrs = ParseArgs(args);
 
 	CPoint vertex1 = { stod(shapeParametrs[1]), stod(shapeParametrs[2]) };
@@ -92,7 +92,7 @@ void CShapeProcessor::AddTriangle(std::istream& args)
 			outlineColor = stoul(shapeParametrs[7], nullptr, 16);
 			fillColor = stoul(shapeParametrs[8], nullptr, 16);
 		}
-		
+
 		auto triangle = make_shared<CTriangle>(vertex1, vertex2, vertex3, fillColor, outlineColor);
 		m_shapesList.push_back(triangle);
 	}
@@ -181,7 +181,7 @@ void CShapeProcessor::GetShapeWithMinPerimeter() const
 	{
 		m_output << "Failed to get the shape with min perimeter. Shapes list is empty." << endl;
 	}
-	
+
 }
 
 void CShapeProcessor::GetShapeWithMaxArea() const

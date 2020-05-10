@@ -1,11 +1,13 @@
+﻿#include "stdafx.h"
 #include <sstream>
-#include <boost/test/unit_test.hpp>
+#include <boost/optional.hpp>
+
 #include <boost/algorithm/string/replace.hpp>
 #include "../Shapes/ShapeProcessor.h"
-#include <boost/optional.hpp>
 
 using namespace std;
 using boost::optional;
+using boost::none;
 
 struct ShapeProcessorDependencies
 {

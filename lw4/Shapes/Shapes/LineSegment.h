@@ -1,13 +1,12 @@
 #pragma once
 #include "Shape.h"
 #include "Point.h"
-#include "Header.h"
 
 class CLineSegment : public CShape
 {
 public:
 	CLineSegment(const CPoint& startPoint, const CPoint& endPoint, uint32_t lineColor);
-	
+
 	double GetArea() const override;
 	double GetPerimeter() const override;
 
@@ -21,3 +20,4 @@ private:
 };
 
 double GetDistance(CPoint startPoint, CPoint endPoint);
+

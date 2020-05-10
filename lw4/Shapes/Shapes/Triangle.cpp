@@ -1,8 +1,8 @@
+#include "stdafx.h"
 #include "Triangle.h"
-#include "Header.h"
 #include "LineSegment.h"
 
-CTriangle::CTriangle(const CPoint & vertex1, const CPoint& vertex2, const CPoint& vertex3, uint32_t fillColor, uint32_t outlineColor)
+CTriangle::CTriangle(const CPoint& vertex1, const CPoint& vertex2, const CPoint& vertex3, uint32_t fillColor, uint32_t outlineColor)
 	: CSolidShape("Triangle", outlineColor, fillColor)
 	, m_vertex1(vertex1)
 	, m_vertex2(vertex2)

@@ -1,5 +1,7 @@
+#include "stdafx.h"
 #include "Circle.h"
-#include "Header.h"
+
+#define M_PI 3.14159265358979323846
 
 CCircle::CCircle(const CPoint& center, double radius, uint32_t fillColor, uint32_t outlineColor)
 	: CSolidShape("Circle", outlineColor, fillColor)
@@ -34,5 +36,3 @@ void CCircle::AppendProperties(std::ostream& strm) const
 		<< "\tCenter = " << m_center.ToString() << endl
 		<< "\tRadius = " << GetRadius() << endl;
 }
-
-
