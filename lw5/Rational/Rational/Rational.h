@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class CRational final
+class CRational
 {
 public:
 	CRational(int numerator = 0, int denominator = 1);
@@ -25,15 +25,14 @@ private:
 
 	void Normalize();
 };
+
 CRational const operator+(CRational const& rational1, CRational const& rational2);
 CRational const operator-(CRational const& rational1, CRational const& rational2);
-
 CRational const operator*(CRational const& rational1, CRational const& rational2);
 CRational const operator/(CRational const& rational1, CRational const& rational2);
 
 bool const operator ==(CRational const& rational1, CRational const& rational2);
 bool const operator !=(CRational const& rational1, CRational const& rational2);
-
 bool const operator < (CRational const& rational1, CRational const& rational2);
 bool const operator > (CRational const& rational1, CRational const& rational2);
 bool const operator <= (CRational const& rational1, CRational const& rational2);
