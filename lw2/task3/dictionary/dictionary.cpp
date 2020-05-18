@@ -1,4 +1,7 @@
-﻿#include "Dictionary.h"
+﻿#include "stdafx.h"
+#include "dictionary.h"
+
+using namespace std;
 
 void ReadDictionary(const string& fIn, Dictionary& dictionary)
 {
@@ -30,7 +33,6 @@ bool ProcessInput(Dictionary& dictionary)
 {
 	cout << ">";
 	string inputWord = ReadLine();
-	inputWord = ToLowerCase(inputWord);
 	bool change = false;
 	while (inputWord != END_WORK)
 	{
@@ -43,21 +45,21 @@ bool ProcessInput(Dictionary& dictionary)
 		}
 		cout << ">";
 		inputWord = ReadLine();
-		inputWord = ToLowerCase(inputWord);
 	}
 	return change;
-} 
+}
 
 bool SearchForTranslation(Dictionary& dictionary, const string& searchString)
 {
+	string lowerCaseString = ToLowerCase(searchString);
 	for (const auto& pair : dictionary)
 	{
-		if (pair.first == searchString)
+		if (pair.first == lowerCaseString)
 		{
 			cout << pair.second << endl;
 			return true;
 		}
-		if (pair.second == searchString)
+		if (pair.second == lowerCaseString)
 		{
 			cout << pair.first << endl;
 			return true;
@@ -96,8 +98,9 @@ bool GetTranslation(const string& inputWord, string& translation)
 
 void InsertInDictionary(Dictionary& dictionary, const string& inputWord, const string& translation)
 {
+	string inputWordInLowerCase = ToLowerCase(inputWord);
 	pair<string, string> newPair;
-	newPair = make_pair(inputWord, translation);
+	newPair = make_pair(inputWordInLowerCase, translation);
 	dictionary.insert(newPair);
 }
 
@@ -110,7 +113,7 @@ void RecordToFile(const string& fOut, Dictionary& dictionary)
 		if ((ch == AGREE_SAVE_L) || (ch == AGREE_SAVE_H))
 		{
 			ofstream dictionaryFile(fOut);
-			for (const auto& record: dictionary)
+			for (const auto& record : dictionary)
 			{
 				dictionaryFile << record.first << "-" << record.second << endl;
 			}
