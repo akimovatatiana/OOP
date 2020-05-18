@@ -2,8 +2,6 @@
 #include <boost/algorithm/string/replace.hpp>
 #include "../Shapes/Point.h"
 #include "../Shapes/LineSegment.h"
-#include "../Shapes/Shape.h"
-#include "../Shapes/SolidShape.h"
 #include "../Shapes/IShape.h"
 #include "../Shapes/ISolidShape.h"
 #include "../Shapes/Rectangle.h"

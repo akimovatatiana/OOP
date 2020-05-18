@@ -2,9 +2,9 @@
 #include "LineSegment.h"
 
 CLineSegment::CLineSegment(const CPoint& startPoint, const CPoint& endPoint, uint32_t lineColor)
-	: CShape("Line segment", lineColor)
-	, m_startPoint(startPoint)
+	: m_startPoint(startPoint)
 	, m_endPoint(endPoint)
+	, m_outlineColor(lineColor)
 {
 }
 double CLineSegment::GetArea() const
@@ -16,19 +16,32 @@ double CLineSegment::GetPerimeter() const
 	return GetDistance(m_startPoint, m_endPoint);
 }
 
+uint32_t CLineSegment::GetOutlineColor() const
+{
+	return m_outlineColor;
+}
+
 CPoint CLineSegment::GetStartPoint() const
 {
 	return m_startPoint;
 }
+
 CPoint CLineSegment::GetEndPoint() const
 {
 	return m_endPoint;
 }
 
-void CLineSegment::AppendProperties(std::ostream& strm) const
+std::string CLineSegment::ToString() const
 {
-	strm << "\tStart point = " << m_startPoint.ToString() << endl
+	ostringstream strm;
+	strm << "Line segment" << ":" << endl
+		<< fixed << setprecision(4)
+		<< "\tArea = " << GetArea() << endl
+		<< "\tPerimeter = " << GetPerimeter() << endl
+		<< "\tOutline color = #" << setfill('0') << setw(6) << hex << GetOutlineColor() << endl
+		<< "\tStart point = " << m_startPoint.ToString() << endl
 		<< "\tEnd point = " << m_endPoint.ToString() << endl;
+	return strm.str();
 }
 
 double GetDistance(CPoint startPoint, CPoint endPoint)

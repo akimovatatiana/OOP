@@ -4,9 +4,10 @@
 #define M_PI 3.14159265358979323846
 
 CCircle::CCircle(const CPoint& center, double radius, uint32_t fillColor, uint32_t outlineColor)
-	: CSolidShape("Circle", outlineColor, fillColor)
-	, m_center(center)
+	: m_center(center)
 	, m_radius(radius)
+	, m_outlineColor(outlineColor)
+	, m_fillColor(fillColor)
 {
 }
 
@@ -30,9 +31,26 @@ double CCircle::GetRadius() const
 	return m_radius;
 }
 
-void CCircle::AppendProperties(std::ostream& strm) const
+uint32_t CCircle::GetOutlineColor() const
 {
-	strm << "\tFill color = #" << setfill('0') << setw(6) << hex << GetFillColor() << endl
+	return m_outlineColor;
+}
+
+uint32_t CCircle::GetFillColor() const
+{
+	return m_fillColor;
+}
+
+std::string CCircle::ToString() const
+{
+	ostringstream strm;
+	strm << "Circle" << ":" << endl
+		<< fixed << setprecision(4)
+		<< "\tArea = " << GetArea() << endl
+		<< "\tPerimeter = " << GetPerimeter() << endl
+		<< "\tOutline color = #" << setfill('0') << setw(6) << hex << m_outlineColor << endl
+		<< "\tFill color = #" << setfill('0') << setw(6) << hex << m_fillColor << endl
 		<< "\tCenter = " << m_center.ToString() << endl
 		<< "\tRadius = " << GetRadius() << endl;
+	return strm.str();
 }

@@ -182,9 +182,7 @@
     <ClCompile Include="..\Shapes\LineSegment.cpp" />
     <ClCompile Include="..\Shapes\Point.cpp" />
     <ClCompile Include="..\Shapes\Rectangle.cpp" />
-    <ClCompile Include="..\Shapes\Shape.cpp" />
     <ClCompile Include="..\Shapes\ShapeProcessor.cpp" />
-    <ClCompile Include="..\Shapes\SolidShape.cpp" />
     <ClCompile Include="..\Shapes\Triangle.cpp" />
     <ClCompile Include="ShapeProcessorTests.cpp" />
     <ClCompile Include="stdafx.cpp">

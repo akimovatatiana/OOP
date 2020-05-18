@@ -3,10 +3,11 @@
 #include "LineSegment.h"
 
 CRectangle::CRectangle(const CPoint& topLeft, double width, double height, uint32_t fillColor, uint32_t outlineColor)
-	: CSolidShape("Rectangle", outlineColor, fillColor)
-	, m_topLeft(topLeft)
+	: m_topLeft(topLeft)
 	, m_width(width)
 	, m_height(height)
+	, m_outlineColor(outlineColor)
+	, m_fillColor(fillColor)
 {
 }
 
@@ -35,10 +36,27 @@ double CRectangle::GetHeight() const
 	return m_height;
 }
 
-void CRectangle::AppendProperties(std::ostream& strm) const
+uint32_t CRectangle::GetFillColor() const
 {
-	strm << "\tFill color = #" << setfill('0') << setw(6) << hex << GetFillColor() << endl
+	return m_fillColor;
+}
+
+uint32_t CRectangle::GetOutlineColor() const
+{
+	return m_outlineColor;
+}
+
+std::string CRectangle::ToString() const
+{
+	ostringstream strm;
+	strm << "Rectangle" << ":" << endl
+		<< fixed << setprecision(4)
+		<< "\tArea = " << GetArea() << endl
+		<< "\tPerimeter = " << GetPerimeter() << endl
+		<< "\tOutline color = #" << setfill('0') << setw(6) << hex << m_outlineColor << endl
+		<< "\tFill color = #" << setfill('0') << setw(6) << hex << m_fillColor << endl
 		<< "\tTop left = " << m_topLeft.ToString() << endl
 		<< "\tWidth = " << GetWidth() << endl
 		<< "\tHeight = " << GetHeight() << endl;
+	return strm.str();
 }
