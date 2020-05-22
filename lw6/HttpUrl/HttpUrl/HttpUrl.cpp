@@ -3,51 +3,25 @@
 #include "UrlParsingError.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
+#include "Constans.h"
 
 using namespace std;
+using namespace ExceptionMessages;
 
 CHttpUrl::CHttpUrl(std::string const& url)
 {
-	if (url.empty())
+	try
 	{
-		throw CUrlParsingError("Empty URL!");
+		ParseUrl(url);
 	}
-	string protocol = ParseProtocol(url);
-	m_protocol = GetProtocolFromString(protocol);
-	
-	string urlString(url);
-	size_t position = urlString.find("://") + 3;
-	
-	urlString = urlString.substr(position);
-
-	m_domain = ParseDomain(urlString);
-	urlString = urlString.substr(m_domain.size());
-
-	position = urlString.find(":");
-
-	if (position != string::npos)
+	catch (const std::invalid_argument& e)
 	{
-		m_port = ParsePort(urlString.substr(position));
-		urlString = urlString.substr(std::to_string(m_port).size() + 1);
+		throw CUrlParsingError(e.what());
 	}
-	else
-	{
-		m_port = GetDefaultPort(m_protocol);
-	}
-
-	m_document = ParseDocument(urlString);
-
-	string portStr = "";
-	if (m_port != HTTP_DEFAULT_PORT && m_port != HTTPS_DEFAULT_PORT)
-	{
-		portStr = ":" + to_string(m_port);
-	}
-
-	m_url = ProtocolToString(m_protocol) + "://" + m_domain + portStr + m_document;
 }
 
 CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Protocol protocol)
-	: m_domain(ParseDomain(domain))
+	: m_domain(domain)
 	, m_document(ParseDocument(document))
 	, m_protocol(protocol)
 {
@@ -55,7 +29,7 @@ CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Proto
 }
 
 CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Protocol protocol, unsigned short port)
-	: m_domain(ParseDomain(domain))
+	: m_domain(domain)
 	, m_document(ParseDocument(document))
 	, m_protocol(protocol)
 	, m_port(port)
@@ -65,7 +39,7 @@ CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Proto
 std::string CHttpUrl::GetURL() const
 {
 	string url = ProtocolToString(m_protocol) + "://" + m_domain;
-	if (m_port != HTTP_DEFAULT_PORT && m_port != HTTPS_DEFAULT_PORT)
+	if (m_port != GetDefaultPort(m_protocol))
 	{
 		url += ":" + std::to_string(m_port);
 	}
@@ -92,12 +66,42 @@ unsigned short CHttpUrl::GetPort() const
 	return m_port;
 }
 
+void CHttpUrl::ParseUrl(const std::string& url)
+{
+	if (url.empty())
+	{
+		throw invalid_argument(EMPTY_URL);
+	}
+	string urlString(url);
+
+	string protocol = ParseProtocol(urlString);
+	m_protocol = GetProtocolFromString(protocol);
+
+	size_t position = urlString.find("://") + 3;
+	urlString = urlString.substr(position);
+	m_domain = ParseDomain(urlString);
+	urlString = urlString.substr(m_domain.size());
+
+	position = urlString.find(":");
+	if (position != string::npos)
+	{
+		m_port = ParsePort(urlString.substr(position));
+		urlString = urlString.substr(std::to_string(m_port).size() + 1);
+	}
+	else
+	{
+		m_port = GetDefaultPort(m_protocol);
+	}
+
+	m_document = ParseDocument(urlString);
+}
+
 std::string CHttpUrl::ParseProtocol(const std::string& url)
 {
 	size_t endOfProtocol = url.find("://");
 	if (endOfProtocol == string::npos)
 	{
-		throw CUrlParsingError("Invalid protocol. Usage: :// after protocol.");
+		throw invalid_argument(INVALID_PROTOCOL);
 	}
 	string protocol = boost::to_lower_copy(url.substr(0, endOfProtocol));
 	GetProtocolFromString(protocol);
@@ -114,7 +118,7 @@ std::string CHttpUrl::ParseDomain(const std::string& url)
 	string domain = url.substr(0, endOfDomain);
 	if (domain == "" || (domain.find(' ') != std::string::npos))
 	{
-		throw CUrlParsingError("Invalid domain");
+		throw invalid_argument(INVALID_DOMAIN);
 	}
 	return domain;
 }
@@ -131,12 +135,12 @@ unsigned short CHttpUrl::ParsePort(const std::string& url)
 	}
 	catch (boost::bad_lexical_cast&)
 	{
-		throw CUrlParsingError("Invalid port. Usage: :<port>");
+		throw invalid_argument(INVALID_PORT);
 	}
 
-	if (port < MIN_PORT_NUMBER || port > MAX_PORT_NUMBER)
+	if (port < MIN_PORT_VALUE || port > MAX_PORT_VALUE)
 	{
-		throw CUrlParsingError("Invalid port. Port must be in range [1, 65535]");
+		throw invalid_argument(PORT_OUT_OF_RANGE);
 	}
 	unsigned short us_port = (unsigned short)port;
 	return us_port;
@@ -147,27 +151,27 @@ std::string CHttpUrl::ParseDocument(const std::string& url)
 	string document = (url[0] != '/') ? '/' + url : url;
 	if (document.empty() || document.find(' ') != string::npos)
 	{
-		throw CUrlParsingError("Invalid document");
+		throw invalid_argument(INVALID_DOCUMENT);
 	}
 	return document;
 }
 
 Protocol CHttpUrl::GetProtocolFromString(const std::string& protocol)
 {
-	if (protocol == "http")
+	if (protocol == HTTP_STRING)
 	{
 		return Protocol::HTTP;
 	}
-	if (protocol == "https")
+	if (protocol == HTTPS_STRING)
 	{
 		return Protocol::HTTPS;
 	}
-	throw CUrlParsingError("Invalid protocol type. Usage: http or https");
+	throw invalid_argument(INVALID_PROTOCOL_TYPE);
 }
 
 std::string CHttpUrl::ProtocolToString(const Protocol& protocol)
 {
-	return (protocol == Protocol::HTTP) ? "http" : "https";
+	return (protocol == Protocol::HTTP) ? HTTP_STRING : HTTPS_STRING;
 }
 
 unsigned short CHttpUrl::GetDefaultPort(Protocol protocol)

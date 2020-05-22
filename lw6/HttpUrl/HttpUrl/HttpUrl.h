@@ -1,10 +1,5 @@
 #pragma once
 
-const unsigned short HTTP_DEFAULT_PORT = 80;
-const unsigned short HTTPS_DEFAULT_PORT = 443;
-const unsigned short MAX_PORT_NUMBER = 65535;
-const unsigned short MIN_PORT_NUMBER = 1;
-
 enum class Protocol
 {
 	HTTP = 80,
@@ -42,6 +37,7 @@ private:
 	Protocol m_protocol;
 	unsigned short m_port;
 
+	void ParseUrl(const std::string& url);
 	static std::string ParseProtocol(const std::string& url);
 	static std::string ParseDomain(const std::string& url);
 	static unsigned short ParsePort(const std::string& url);

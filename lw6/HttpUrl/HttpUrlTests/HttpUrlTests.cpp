@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "../HttpUrl/HttpUrl.h"
 #include "../HttpUrl/UrlParsingError.h"
+#include "../HttpUrl/Constans.h"
 
 using namespace std; 
 

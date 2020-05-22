@@ -1,0 +1,19 @@
+valid:
+	http:
+		http://domain.com
+		http://domain.com:80
+		http://domain.com:85
+		http://domain.com:80/index.html
+		http://domain.com:85/document/index.html
+	https:
+		https://domain.com
+		https://domain.com:443
+		https://domain.com:865
+		https://domain.com:443/index.html
+		https://domain.com:85/document/index.html
+invalid:
+		htt://domain.com
+		http://domain.com:
+		http://domain.com:86986
+		domain.com:80/index.html
+		http://:85/document/index.html
