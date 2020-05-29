@@ -1,7 +1,4 @@
-﻿// FindMaxEx.cpp : Defines the entry point for the console application.
-//
-
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Sportsman.h"
 #include "FindMaxEx.h"
 
@@ -9,15 +6,15 @@ using namespace std;
 
 Sportsman GetSportsman(const string& inputString)
 {
-	std::istringstream ss(inputString);
+	istringstream str(inputString);
 	Sportsman sportsman;
 	string name[3];
-	ss >> name[0] >> name[1] >> name[2] >> sportsman.height >> sportsman.weight;
+	str >> name[0] >> name[1] >> name[2] >> sportsman.height >> sportsman.weight;
 	sportsman.name = name[0] + ' ' + name[1] + ' ' + name[2]; 
 	
-	if (!ss)
+	if (!str)
 	{
-		throw std::runtime_error("Invalid string. Usage: <surname> <first name <middle name> <height> <weight>\n");
+		throw std::runtime_error("Invalid string. Usage: <surname> <first name> <middle name> <height> <weight>\n");
 	}
 	
 	return sportsman;
@@ -50,6 +47,10 @@ void PrintMaxWeight(ostream& output, const vector<Sportsman>& sportsmen)
 			<< "Weight: " << sportsmanWithMaxWeight.weight << endl
 			<< "Height: " << sportsmanWithMaxWeight.height << endl;
 	}
+	else
+	{
+		output << "Empty vector of sportsmen. Can not find sportsman with max weight." << endl;
+	}
 }
 
 void PrintMaxHeight(ostream& output, const vector<Sportsman>& sportsmen)
@@ -60,6 +61,10 @@ void PrintMaxHeight(ostream& output, const vector<Sportsman>& sportsmen)
 		output << "Sportsman with max height is " << sportsmanWithMaxHeight.name << endl
 			<< "Weight: " << sportsmanWithMaxHeight.weight << endl
 			<< "Height: " << sportsmanWithMaxHeight.height << endl;
+	}
+	else
+	{
+		output << "Empty vector of sportsmen. Can not find sportsman with max height." << endl;
 	}
 }
 

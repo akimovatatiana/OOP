@@ -8,17 +8,17 @@ struct Sportsman
 	double weight;
 };
 
-bool IsHeightLess(Sportsman const& left, Sportsman const& right)
+bool IsHeightLess(const Sportsman& left, const Sportsman& right)
 {
 	return left.height < right.height;
 }
 
-bool IsNameLess(Sportsman const& left, Sportsman const& right)
+bool IsNameLess(const Sportsman& left, const Sportsman& right)
 {
 	return left.name < right.name;
 }
 
-bool IsWeightLess(Sportsman const& left, Sportsman const& right)
+bool IsWeightLess(const Sportsman& left, const Sportsman& right)
 {
 	return fabs(left.weight - right.weight) < DBL_EPSILON;
 }
